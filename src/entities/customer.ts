@@ -1,3 +1,5 @@
+import { Address } from "./address";
+
 class Customer {
 
   private active: boolean = true;
@@ -6,7 +8,8 @@ class Customer {
     private readonly id: number,
     private readonly name: string,
     private readonly email: string,
-    private readonly phone: string
+    private readonly phone: string,
+    private readonly address: Address,
   ) {
     this.validate();
   }
@@ -22,10 +25,9 @@ class Customer {
       throw new Error('Phone is required');
     }
   }
-
   
   getDetails(): string {
-    return `Customer ID: ${this.id}, Name: ${this.name}, Email: ${this.email}, Phone: ${this.phone}`;
+    return `Customer ID: ${this.id}, Name: ${this.name}, Email: ${this.email}, Phone: ${this.phone}, Address: ${this.address.toString()}`;
   }
 
   getId(): number {
