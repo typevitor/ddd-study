@@ -1,6 +1,6 @@
 import { Address } from "./address";
 
-class Customer {
+export class Customer {
 
   private active: boolean = true;
 
