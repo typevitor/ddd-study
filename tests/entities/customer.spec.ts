@@ -1,3 +1,4 @@
+import { Address } from '../../src/entities/address';
 import { Customer } from '../../src/entities/customer';
 
 describe('Customer Tests', () => {
@@ -41,4 +42,11 @@ describe('Customer Tests', () => {
     }).toThrow('Address is required to activate the customer');
   });
 
+  it('should activate a customer with address', () => {
+    const customer = new Customer('1', 'John Doe', 'email@test.com', '1234567890');
+    const address = new Address('123 Main St', 'Anytown', 'CA', '12345');
+    customer.addAddress(address);
+    customer.activate();
+    expect(customer.isActive()).toBe(true);
+  });
 });
