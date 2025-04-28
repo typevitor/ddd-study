@@ -49,4 +49,14 @@ describe('Customer Tests', () => {
     customer.activate();
     expect(customer.isActive()).toBe(true);
   });
+
+  it('should deactivate a customer', () => {
+    const customer = new Customer('1', 'John Doe', 'email@test.com', '1234567890');
+    const address = new Address('123 Main St', 'Anytown', 'CA', '12345');
+    customer.addAddress(address);
+    customer.activate();
+    expect(customer.isActive()).toBe(true);
+    customer.deactivate();
+    expect(customer.isActive()).toBe(false);
+  });
 });
