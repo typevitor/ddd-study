@@ -1,7 +1,7 @@
 import { Address } from '../../src/entities/address';
 import { Customer } from '../../src/entities/customer';
 
-describe('Customer Tests', () => {
+describe('CustomerUnitTests', () => {
   
   it('should not create a customer with invalid ID', () => {
     expect(() => {

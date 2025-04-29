@@ -1,6 +1,6 @@
 import { Address } from '../../src/entities/address';
 
-describe('Address Tests', () => {
+describe('AddressUnitTests', () => {
   
   it('should not create an address with invalid street', () => {
     expect(() => {
