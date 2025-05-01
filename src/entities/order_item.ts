@@ -32,4 +32,16 @@ export class OrderItem {
   getTotalPrice(): number {
     return this.quantity * this.price;
   }
+
+  getId(): string {
+    return this.id;
+  }
+
+  getQuantity(): number {
+    return this.quantity;
+  }
+
+  getPrice(): number {
+    return this.price;
+  }
 }

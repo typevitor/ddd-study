@@ -26,6 +26,14 @@ export class Order {
     if( this.items.length === 0) {
       throw new Error('Items are required');
     }
+
+    if (this.items.some(item => item.getQuantity() <= 0)) {
+      throw new Error('Quantity must be greater than zero');
+    }
+
+    if (this.items.some(item => item.getPrice() < 0)) {
+      throw new Error('Price must be greater than zero');
+    }
   }
   
   addItem(item: OrderItem): void {
@@ -34,11 +42,11 @@ export class Order {
   }
 
   removeItem(itemId: string): void {
-    this.items = this.items.filter(item => item.id !== itemId);
+    this.items = this.items.filter(item => item.getId() !== itemId);
     this.total = this.calculateTotal();
   }
 
   calculateTotal(): number {
-    return this.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return this.items.reduce((sum, item) => sum + item.getPrice() * item.getQuantity(), 0);
   }
 }
