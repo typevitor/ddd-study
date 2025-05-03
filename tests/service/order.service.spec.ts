@@ -1,6 +1,7 @@
 import { Order } from "../../src/entities/order";
 import { OrderItem } from "../../src/entities/order_item";
 import { OrderService } from "../../src/service/order.service";
+import { Customer } from "../../src/entities/customer";
 
 describe('OrderServiceUnitTest', () => {
 
@@ -14,6 +15,20 @@ describe('OrderServiceUnitTest', () => {
 
     const total = OrderService.total([order1, order2]);
     expect(total).toBe(360);
+  });
+
+  it('should throw error when placing an order with no items', () => {
+    const customer = new Customer('c1', 'Customer 1', 'e1', 'p1');
+    expect(() => OrderService.placeOrder(customer, [])).toThrow('Order must have at least one item');
+  });
+
+  it('should place an order', () => {
+    const customer = new Customer('c1', 'Customer 1', 'e1', 'p1');
+    const item1 = new OrderItem('1', 'Product 1', 1, 200);
+    const item2 = new OrderItem('2', 'Product 2', 2, 30);
+    const order = OrderService.placeOrder(customer, [item1, item2]);
+    expect(customer.rewardPoints).toBe(130);
+    expect(order.calculateTotal()).toBe(260);
   });
 
 });
