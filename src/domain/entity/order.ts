@@ -49,4 +49,8 @@ export class Order {
   calculateTotal(): number {
     return this.items.reduce((sum, item) => sum + item.getPrice() * item.getQuantity(), 0);
   }
+
+  getItems(): OrderItem[] {
+    return this.items;
+  }
 }
