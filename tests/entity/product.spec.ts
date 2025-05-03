@@ -34,4 +34,10 @@ describe('ProductrUnitTest', () => {
     product.changeName('Product 2');
     expect(product.getName()).toBe('Product 2');
   });
+
+  it('should update the product price', () => {
+    const product = new Product('1', 'Product 1', 150);
+    product.changePrice(200);
+    expect(product.getPrice()).toBe(200);
+  });
 });
