@@ -59,4 +59,11 @@ describe('CustomerUnitTests', () => {
     customer.deactivate();
     expect(customer.isActive()).toBe(false);
   });
+
+  it('should add reward points to a customer', () => {
+    const customer = new Customer('1', 'John Doe', 'email', '1234567890');
+    expect(customer.rewardPoints).toBe(0);
+    customer.addRewardPoints(100);
+    expect(customer.rewardPoints).toBe(100);
+  });
 });
