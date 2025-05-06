@@ -1,5 +1,5 @@
-import { Address } from '../../src/entities/address';
-import { Customer } from '../../src/entities/customer';
+import { Address } from '../../src/domain/entity/address';
+import { Customer } from '../../src/domain/entity/customer';
 
 describe('CustomerUnitTests', () => {
   
