@@ -1,5 +1,5 @@
-import { Order } from '../../src/entities/order';
-import { OrderItem } from '../../src/entities/order_item';
+import { Order } from '../../src/entity/order';
+import { OrderItem } from '../../src/entity/order_item';
 
 describe('OrderUnitTest', () => {
 

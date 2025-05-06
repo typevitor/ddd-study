@@ -1,7 +1,4 @@
-import { Address } from "./entities/address";
-import { Customer } from "./entities/customer";
 import { Order } from "./entities/order";
-import { OrderItem } from "./entities/order_item";
 
 const customer = new Customer(
   '1',
