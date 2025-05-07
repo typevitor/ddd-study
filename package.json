@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test": "npm run tsc -- --noEmit && jest",
-     "tsc": "tsc",
+    "tsc": "tsc",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage"
   },
@@ -15,5 +15,11 @@
     "ts-node": "^10.9.2",
     "tslint": "^5.20.1",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "sequelize": "^6.37.7",
+    "sequelize-typescript": "^2.1.6",
+    "sqlite3": "^5.1.7"
   }
 }
