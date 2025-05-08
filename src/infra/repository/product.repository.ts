@@ -39,8 +39,15 @@ export class ProductRepository implements ProductRepositoryInterface {
   }
 
   async findAll(): Promise<Product[]> {
-    // Implementation for finding all products
-    return [];
+    return ProductModel.findAll().then((products) => {
+      return products.map((product) => {
+        return new Product(
+          product.id,
+          product.name,
+          product.price
+        );
+      });
+    });
   }
 
   async findByName(name: string): Promise<Product | null> {

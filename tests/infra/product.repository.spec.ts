@@ -64,4 +64,20 @@ describe('ProductRepositoryTest', () => {
     expect(foundProduct?.getName()).toBe(productModel?.name);
     expect(foundProduct?.getPrice()).toBe(productModel?.price);
   });
+
+  it('shoul return all products', async () => {
+    const productRepository = new ProductRepository();
+    
+    const product1 = new Product('a-b-c', 'Product 1', 100);
+    await productRepository.create(product1);
+    
+    const product2 = new Product('d-e-f', 'Product 2', 200);
+    await productRepository.create(product2);
+
+    const listProducts = await productRepository.findAll();
+
+    const products = [product1, product2];
+    expect(products).toHaveLength(2);
+    expect(products).toEqual(listProducts);
+  });
 });
