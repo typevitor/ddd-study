@@ -45,7 +45,7 @@ describe('CustomerUnitTests', () => {
   it('should activate a customer with address', () => {
     const customer = new Customer('1', 'John Doe', 'email@test.com', '1234567890');
     const address = new Address('123 Main St', 'Anytown', 'CA', '12345');
-    customer.addAddress(address);
+    customer.changeAddress(address);
     customer.activate();
     expect(customer.isActive()).toBe(true);
   });
@@ -53,7 +53,7 @@ describe('CustomerUnitTests', () => {
   it('should deactivate a customer', () => {
     const customer = new Customer('1', 'John Doe', 'email@test.com', '1234567890');
     const address = new Address('123 Main St', 'Anytown', 'CA', '12345');
-    customer.addAddress(address);
+    customer.changeAddress(address);
     customer.activate();
     expect(customer.isActive()).toBe(true);
     customer.deactivate();

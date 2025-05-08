@@ -26,4 +26,20 @@ export class Address {
   public toString(): string {
     return `${this.street}, ${this.city}, ${this.state} ${this.zipCode}`;
   }
+
+  public getStreet(): string {
+    return this.street;
+  }
+  
+  public getCity(): string {
+    return this.city;
+  }
+  
+  public getState(): string {
+    return this.state;
+  }
+
+  public getZipCode(): string {
+    return this.zipCode;
+  }
 }

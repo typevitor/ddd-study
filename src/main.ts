@@ -9,7 +9,7 @@ const customer = new Customer(
   'email@test.com',
   '1234567890',
 );
-customer.addAddress(
+customer.changeAddress(
   new Address(
     '123 Main St',
     'Anytown',

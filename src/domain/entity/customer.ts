@@ -29,7 +29,7 @@ export class Customer {
     }
   }
 
-  addAddress(address: Address): void {
+  changeAddress(address: Address): void {
     if (!address) {
       throw new Error('Address is required');
     }
@@ -58,6 +58,10 @@ export class Customer {
 
   isActive(): boolean {
     return this.active;
+  }
+
+  getAddress(): Address | null {
+    return this.address;
   }
 
   activate(): void {
