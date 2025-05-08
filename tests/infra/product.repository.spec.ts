@@ -1,5 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import ProductModel from "../../src/infra/db/sequelize/model/product.model";
+import { Product } from "../../src/domain/entity/product";
+import { ProductRepository } from "../../src/infra/repository/product.repository";
 
 describe('ProductRepositoryTest', () => {
 
@@ -22,7 +24,32 @@ describe('ProductRepositoryTest', () => {
   });
 
   it('should be able to create a product', async () => {
-    
+    const productRepository = new ProductRepository();
+    const product = new Product('a-b-c', 'Product 1', 100);
+    await productRepository.create(product);
+    const productModel = await ProductModel.findByPk('a-b-c');
+    expect(productModel).toBeDefined();
+    expect(productModel?.toJSON()).toStrictEqual({
+      id: 'a-b-c',
+      name: 'Product 1',
+      price: 100,
+    });
+  });
+
+  it('shoul update a product', async () => {
+    const productRepository = new ProductRepository();
+    const product = new Product('a-b-c', 'Product 1', 100);
+    await productRepository.create(product);
+    product.changeName('Product 2');
+    product.changePrice(200);
+    await productRepository.update(product);
+    const productModel = await ProductModel.findByPk('a-b-c');
+    expect(productModel).toBeDefined();
+    expect(productModel?.toJSON()).toStrictEqual({
+      id: 'a-b-c',
+      name: 'Product 2',
+      price: 200,
+    });
   });
 
 });

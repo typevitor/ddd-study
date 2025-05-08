@@ -36,4 +36,9 @@ export class Product {
     this.name = name;
     this.validate();
   }
+
+  changePrice(price: number): void {
+    this.price = price;
+    this.validate();
+  }
 }
