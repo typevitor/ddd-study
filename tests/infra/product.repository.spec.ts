@@ -52,4 +52,16 @@ describe('ProductRepositoryTest', () => {
     });
   });
 
+  it('should find a product by id', async () => {
+    const productRepository = new ProductRepository();
+    const product = new Product('a-b-c', 'Product 1', 100);
+    await productRepository.create(product);
+
+    const productModel = await ProductModel.findByPk('a-b-c');
+    const foundProduct = await productRepository.find('a-b-c');
+    expect(foundProduct).toBeDefined();
+    expect(foundProduct?.getId()).toBe(productModel?.id);
+    expect(foundProduct?.getName()).toBe(productModel?.name);
+    expect(foundProduct?.getPrice()).toBe(productModel?.price);
+  });
 });
