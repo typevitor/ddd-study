@@ -16,6 +16,7 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
       city: entity.getAddress()?.getCity(),
       state: entity.getAddress()?.getState(),
       zipCode: entity.getAddress()?.getZipCode(),
+      rewardPoints: 0
     });
   }
 
@@ -30,6 +31,7 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
         city: entity.getAddress().getCity(),
         state: entity.getAddress().getState(),
         zipCode: entity.getAddress().getZipCode(),
+        rewardPoints: entity.rewardPoints,
       },
       {
         where: {

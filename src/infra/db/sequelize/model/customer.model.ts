@@ -60,4 +60,11 @@ export default class CustomerModel extends Model {
     allowNull: true,
   })
   declare zipCode: string;
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  })
+  declare rewardPoints: number;
 }

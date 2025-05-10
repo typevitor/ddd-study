@@ -39,7 +39,8 @@ describe('CustomerRepositoryTest', () => {
       street: null,
       city: null,
       state: null,
-      zipCode: null
+      zipCode: null,
+      rewardPoints: 0
     });
   });
 
@@ -59,7 +60,8 @@ describe('CustomerRepositoryTest', () => {
       street: 'Street 1',
       city: 'City 1',
       state: 'State 1',
-      zipCode: '1233-33'
+      zipCode: '1233-33',
+      rewardPoints: 0
     });
   });
 
@@ -116,7 +118,8 @@ describe('CustomerRepositoryTest', () => {
       street: 'Street 1',
       city: 'City 1',
       state: 'State 1',
-      zipCode: '1233-33'
+      zipCode: '1233-33',
+      rewardPoints: 0
     });
 
     customer.changeAddress(new Address('Street 2', 'City 2', 'State 2', '1234-44'));
@@ -132,7 +135,8 @@ describe('CustomerRepositoryTest', () => {
       street: 'Street 2',
       city: 'City 2',
       state: 'State 2',
-      zipCode: '1234-44'
+      zipCode: '1234-44',
+      rewardPoints: 0
     });
   });
 
@@ -164,5 +168,17 @@ describe('CustomerRepositoryTest', () => {
     expect(customers).toBeDefined();
     expect(customers.length).toBe(2);
     expect(lCustomers).toEqual(customers);
+  });
+
+  it('should be able to increase reward points', async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer('a-b-c', 'Customer 1', 'email@test.com', '123456789');
+    customer.changeAddress(new Address('Street 1', 'City 1', 'State 1', '1233-33'));
+    await customerRepository.create(customer);
+    customer.addRewardPoints(10);
+    await customerRepository.update(customer);
+    const customerModel = await CustomerModel.findByPk('a-b-c');
+    expect(customerModel).toBeDefined();
+    expect(customerModel?.rewardPoints).toBe(10);
   });
 });
