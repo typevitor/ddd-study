@@ -67,3 +67,4 @@ describe('CustomerUnitTests', () => {
     expect(customer.rewardPoints).toBe(100);
   });
 });
+
