@@ -44,4 +44,8 @@ export class OrderItem {
   getPrice(): number {
     return this.price;
   }
+
+  getProductId(): string {
+    return this.productId;
+  }
 }

@@ -53,4 +53,16 @@ export class Order {
   getItems(): OrderItem[] {
     return this.items;
   }
+
+  getId(): string {
+    return this.id;
+  }
+
+  getOrderDate(): Date {
+    return this.orderDate;
+  }
+
+  getCustomerId(): string {
+    return this.customerId;
+  }
 }
