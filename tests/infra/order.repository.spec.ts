@@ -1,9 +1,8 @@
 import { Sequelize } from "sequelize-typescript";
 
-import OrderModel from "../../src/infra/db/sequelize/model/order.model";
+import { OrderModel, OrderItemModel } from "../../src/infra/db/sequelize/model/order.model";
 import CustomerModel from "../../src/infra/db/sequelize/model/customer.model";
 import ProductModel from "../../src/infra/db/sequelize/model/product.model";
-import OrderItemModel from "../../src/infra/db/sequelize/model/order_item.model";
 
 import CustomerRepository from "../../src/infra/repository/customer.repository";
 import ProductRepository from "../../src/infra/repository/product.repository";
@@ -60,6 +59,7 @@ describe('OrderRepositoryTest', () => {
       id: order.getId(),
       customer_id: customer.getId(),
       order_date: order.getOrderDate(),
+      total: 350,
       items: [
         {
           id: 'oi-1',
@@ -67,7 +67,15 @@ describe('OrderRepositoryTest', () => {
           product_id: 'p-1',
           quantity: 2,
           price: 100,
-          total: 200
+          total: 200,
+        },
+        {
+          id: 'oi-1',
+          order_id: order.getId(),
+          product_id: 'p-1',
+          quantity: 1,
+          price: 150,
+          total: 150,
         }
       ]
     });
