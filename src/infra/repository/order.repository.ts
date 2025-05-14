@@ -1,4 +1,5 @@
 import { Order } from "../../domain/entity/order";
+import { OrderItem } from "../../domain/entity/order_item";
 import { OrderRepositoryInterface } from "../../domain/repository/order_repository_interface.interface";
 import {OrderModel, OrderItemModel} from "../db/sequelize/model/order.model";
 
@@ -26,8 +27,31 @@ export default class OrderRepository implements OrderRepositoryInterface {
   }
 
   async find(id: string): Promise<Order | null> {
-    //
-    return null
+    let orderModel: OrderModel;
+    try {
+      orderModel = await OrderModel.findByPk(id);
+    } catch (error) {
+      throw new Error(`Order not found`);
+    }
+    const order = new Order(
+      orderModel.id,
+      orderModel.customer_id,
+      orderModel.order_date,
+      [],
+    );
+
+    orderModel.items.forEach((item) => {
+      order.addItem(
+        new OrderItem(
+          item.id,
+          item.product_id,
+          item.quantity,
+          item.price,
+        ),
+      );
+    });
+  
+    return order;
   }
 
   async findAll(): Promise<Order[]> {

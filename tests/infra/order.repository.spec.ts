@@ -12,7 +12,7 @@ import { Customer } from "../../src/domain/entity/customer";
 import { Address } from "../../src/domain/entity/address";
 import { Product } from '../../src/domain/entity/product';
 import { OrderItem } from "../../src/domain/entity/order_item";
-import { OrderService } from "../../src/service/order.service";
+import { OrderService } from "../../src/domain/service/order.service";
 
 describe('OrderRepositoryTest', () => {
 
@@ -80,4 +80,55 @@ describe('OrderRepositoryTest', () => {
       ]
     });
   });	
+
+  it('should be able to find an order', async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer('a-b-c', 'Customer 1', 'email@test.com', '123456789');
+    customer.changeAddress(new Address('Street 1', 'City 1', 'State 1', '1233-33'));
+    await customerRepository.create(customer);
+    
+    const productRepository = new ProductRepository();
+    const product = new Product('p-1', 'Product 1', 100);
+    await productRepository.create(product);
+
+    const orderRepository = new OrderRepository();
+    const order = OrderService.placeOrder(customer, [
+      new OrderItem('oi-1', product.getId(), 2, product.getPrice())
+    ]);
+    await orderRepository.create(order);
+    
+    const orderModel = await OrderModel.findOne({
+      where: { id: order.getId() },
+      include: ['items']
+    });
+
+    const orderFound = await orderRepository.find(order.getId());
+
+    expect(orderModel).toBeDefined();
+    expect(orderModel?.toJSON()).toStrictEqual({
+      id: orderFound?.getId(),
+      customer_id: orderFound?.getId(),
+      order_date: orderFound?.getOrderDate(),
+      total: orderFound?.calculateTotal(),
+      items: [
+        {
+          id: 'oi-1',
+          order_id: orderFound?.getId(),
+          product_id: 'p-1',
+          quantity: 2,
+          price: 100,
+          total: 200,
+        },
+        {
+          id: 'oi-1',
+          order_id: order.getId(),
+          product_id: 'p-1',
+          quantity: 1,
+          price: 150,
+          total: 150,
+        }
+      ]
+    });
+  });
+  
 });
