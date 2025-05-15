@@ -23,7 +23,29 @@ export default class OrderRepository implements OrderRepositoryInterface {
   }
 
   async update(entity: Order): Promise<void> {
-    //
+    const items = entity.getItems().map(item => ({
+      id: item.getId(),
+      product_id: item.getProductId(),
+      quantity: item.getQuantity(),
+      price: item.getPrice(),
+    }));
+
+    await OrderModel.update({
+      customer_id: entity.getCustomerId(),
+      order_date: entity.getOrderDate(),
+      total: entity.calculateTotal(),
+    }, {
+      where: { id: entity.getId() },
+    });
+
+    await OrderItemModel.destroy({
+      where: { order_id: entity.getId() },
+    });
+
+    await OrderItemModel.bulkCreate(items.map(item => ({
+      ...item,
+      order_id: entity.getId(),
+    })));
   }
 
   async find(id: string): Promise<Order | null> {

@@ -202,4 +202,54 @@ describe('OrderRepositoryTest', () => {
       ]
     });
   });
+
+  it('should be able to update an order', async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer('a-b-c', 'Customer 1', 'email@test.com', '123456789');
+
+    await customerRepository.create(customer);
+    const productRepository = new ProductRepository();
+    const product = new Product('p-1', 'Product 1', 100);
+    await productRepository.create(product);
+    const product2 = new Product('p-2', 'Product 2', 150);
+    await productRepository.create(product2);
+    const orderRepository = new OrderRepository();
+    const order = OrderService.placeOrder(customer, [
+      new OrderItem('oi-1', product.getId(), 2, product.getPrice()),
+    ]);
+    await orderRepository.create(order);
+
+    const orderFound = await orderRepository.find(order.getId());
+    orderFound?.addItem(new OrderItem('oi-2', product2.getId(), 1, product2.getPrice()));
+    await orderRepository.update(orderFound!);
+
+    const orderModel = await OrderModel.findOne({
+      where: { id: order.getId() },
+      include: ['items']
+    });
+    expect(orderModel).toBeDefined();
+    expect(orderModel?.items).toHaveLength(2);
+    expect(orderModel?.toJSON()).toStrictEqual({
+      id: orderFound?.getId(),
+      customer_id: orderFound?.getCustomerId(),
+      order_date: orderFound?.getOrderDate(),
+      total: 350,
+      items: [
+        {
+          id: 'oi-1',
+          order_id: orderFound?.getId(),
+          product_id: 'p-1',
+          quantity: 2,
+          price: 100,
+        },
+        {
+          id: 'oi-2',
+          order_id: orderFound?.getId(),
+          product_id: 'p-2',
+          quantity: 1,
+          price: 150,
+        }
+      ]
+    });
+  });
 });
