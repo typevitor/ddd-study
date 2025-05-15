@@ -157,19 +157,49 @@ describe('OrderRepositoryTest', () => {
 
     await orderRepository.create(order2);
     const orders = await orderRepository.findAll();
+
+    const orderModel = await OrderModel.findAll({
+      include: ['items']
+    });
+
     expect(orders).toHaveLength(2);
-    expect(orders[0].getId()).toBe(order.getId());
-    expect(orders[0].getCustomerId()).toBe(customer.getId());
-    expect(orders[0].getOrderDate()).toEqual(order.getOrderDate());
-    expect(orders[0].calculateTotal()).toBe(350);
-    expect(orders[0].getItems()).toHaveLength(2);
-    expect(orders[0].getItems()[0].getId()).toBe('oi-1');
-    expect(orders[0].getItems()[1].getId()).toBe('oi-2');
-    expect(orders[1].getId()).toBe(order2.getId());
-    expect(orders[1].getCustomerId()).toBe(customer.getId());
-    expect(orders[1].getOrderDate()).toEqual(order2.getOrderDate());
-    expect(orders[1].calculateTotal()).toBe(100);
-    expect(orders[1].getItems()).toHaveLength(1);
-    expect(orders[1].getItems()[0].getId()).toBe('oi-3');
+
+    expect(orderModel[0]?.toJSON()).toStrictEqual({
+      id: order.getId(),
+      customer_id: order.getCustomerId(),
+      order_date: order.getOrderDate(),
+      total: order.calculateTotal(),
+      items: [
+        {
+          id: 'oi-1',
+          order_id: order.getId(),
+          product_id: 'p-1',
+          quantity: 2,
+          price: 100,
+        },
+        {
+          id: 'oi-2',
+          order_id: order.getId(),
+          product_id: 'p-2',
+          quantity: 1,
+          price: 150,
+        }
+      ]
+    });
+    expect(orderModel[1]?.toJSON()).toStrictEqual({
+      id: order2.getId(),
+      customer_id: order2.getCustomerId(),
+      order_date: order2.getOrderDate(),
+      total: order2.calculateTotal(),
+      items: [
+        {
+          id: 'oi-3',
+          order_id: order2.getId(),
+          product_id: 'p-1',
+          quantity: 1,
+          price: 100,
+        }
+      ]
+    });
   });
 });
