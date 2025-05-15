@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 
-import { OrderModel, OrderItemModel } from "../../src/infra/db/sequelize/model/order.model";
+import OrderModel from "../../src/infra/db/sequelize/model/order.model";
+import OrderItemModel from "../../src/infra/db/sequelize/model/order_item.model";
 import CustomerModel from "../../src/infra/db/sequelize/model/customer.model";
 import ProductModel from "../../src/infra/db/sequelize/model/product.model";
 
@@ -43,10 +44,13 @@ describe('OrderRepositoryTest', () => {
     const productRepository = new ProductRepository();
     const product = new Product('p-1', 'Product 1', 100);
     await productRepository.create(product);
+    const product2 = new Product('p-2', 'Product 2', 150);
+    await productRepository.create(product2);
 
     const orderRepository = new OrderRepository();
     const order = OrderService.placeOrder(customer, [
-      new OrderItem('oi-1', product.getId(), 2, product.getPrice())
+      new OrderItem('oi-1', product.getId(), 2, product.getPrice()),
+      new OrderItem('oi-2', product2.getId(), 1, product2.getPrice())
     ]);
     await orderRepository.create(order);
     const orderModel = await OrderModel.findOne({
@@ -67,15 +71,13 @@ describe('OrderRepositoryTest', () => {
           product_id: 'p-1',
           quantity: 2,
           price: 100,
-          total: 200,
         },
         {
-          id: 'oi-1',
+          id: 'oi-2',
           order_id: order.getId(),
-          product_id: 'p-1',
+          product_id: 'p-2',
           quantity: 1,
           price: 150,
-          total: 150,
         }
       ]
     });
@@ -90,10 +92,13 @@ describe('OrderRepositoryTest', () => {
     const productRepository = new ProductRepository();
     const product = new Product('p-1', 'Product 1', 100);
     await productRepository.create(product);
+    const product2 = new Product('p-2', 'Product 2', 150);
+    await productRepository.create(product2);
 
     const orderRepository = new OrderRepository();
     const order = OrderService.placeOrder(customer, [
-      new OrderItem('oi-1', product.getId(), 2, product.getPrice())
+      new OrderItem('oi-1', product.getId(), 2, product.getPrice()),
+      new OrderItem('oi-2', product2.getId(), 1, product2.getPrice())
     ]);
     await orderRepository.create(order);
     
@@ -107,7 +112,7 @@ describe('OrderRepositoryTest', () => {
     expect(orderModel).toBeDefined();
     expect(orderModel?.toJSON()).toStrictEqual({
       id: orderFound?.getId(),
-      customer_id: orderFound?.getId(),
+      customer_id: orderFound?.getCustomerId(),
       order_date: orderFound?.getOrderDate(),
       total: orderFound?.calculateTotal(),
       items: [
@@ -117,15 +122,13 @@ describe('OrderRepositoryTest', () => {
           product_id: 'p-1',
           quantity: 2,
           price: 100,
-          total: 200,
         },
         {
-          id: 'oi-1',
+          id: 'oi-2',
           order_id: order.getId(),
-          product_id: 'p-1',
+          product_id: 'p-2',
           quantity: 1,
           price: 150,
-          total: 150,
         }
       ]
     });
