@@ -133,5 +133,43 @@ describe('OrderRepositoryTest', () => {
       ]
     });
   });
-  
+
+  it('should be able to find all orders', async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer('a-b-c', 'Customer 1', 'email@test.com', '123456789');
+    customer.changeAddress(new Address('Street 1', 'City 1', 'State 1', '1233-33'));
+    await customerRepository.create(customer);
+    const productRepository = new ProductRepository();
+    const product = new Product('p-1', 'Product 1', 100);
+    await productRepository.create(product);
+    const product2 = new Product('p-2', 'Product 2', 150);
+    await productRepository.create(product2);
+    const orderRepository = new OrderRepository();
+    const order = OrderService.placeOrder(customer, [
+      new OrderItem('oi-1', product.getId(), 2, product.getPrice()),
+      new OrderItem('oi-2', product2.getId(), 1, product2.getPrice())
+    ]);
+    await orderRepository.create(order);
+
+    const order2 = OrderService.placeOrder(customer, [
+      new OrderItem('oi-3', product.getId(), 1, product.getPrice()),
+    ]);
+
+    await orderRepository.create(order2);
+    const orders = await orderRepository.findAll();
+    expect(orders).toHaveLength(2);
+    expect(orders[0].getId()).toBe(order.getId());
+    expect(orders[0].getCustomerId()).toBe(customer.getId());
+    expect(orders[0].getOrderDate()).toEqual(order.getOrderDate());
+    expect(orders[0].calculateTotal()).toBe(350);
+    expect(orders[0].getItems()).toHaveLength(2);
+    expect(orders[0].getItems()[0].getId()).toBe('oi-1');
+    expect(orders[0].getItems()[1].getId()).toBe('oi-2');
+    expect(orders[1].getId()).toBe(order2.getId());
+    expect(orders[1].getCustomerId()).toBe(customer.getId());
+    expect(orders[1].getOrderDate()).toEqual(order2.getOrderDate());
+    expect(orders[1].calculateTotal()).toBe(100);
+    expect(orders[1].getItems()).toHaveLength(1);
+    expect(orders[1].getItems()[0].getId()).toBe('oi-3');
+  });
 });
