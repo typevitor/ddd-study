@@ -1,7 +1,7 @@
-import { Order } from "../../src/domain/entity/order";
-import { OrderItem } from "../../src/domain/entity/order_item";
-import { OrderService } from "../../src/domain/service/order.service";
-import { Customer } from "../../src/domain/entity/customer";
+import { Order } from "../../../src/domain/entity/order";
+import { OrderItem } from "../../../src/domain/entity/order_item";
+import { OrderService } from "../../../src/domain/service/order.service";
+import { Customer } from "../../../src/domain/entity/customer";
 
 describe('OrderServiceUnitTest', () => {
 
