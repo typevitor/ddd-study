@@ -9,9 +9,9 @@ import CustomerRepository from "../../src/infra/repository/customer.repository";
 import ProductRepository from "../../src/infra/repository/product.repository";
 import OrderRepository from "../../src/infra/repository/order.repository";
 
-import { Customer } from "../../src/domain/entity/customer";
-import { Address } from "../../src/domain/entity/address";
-import { Product } from '../../src/domain/entity/product';
+import { Customer } from "../../src/domain/customer/entity/customer";
+import { Address } from "../../src/domain/customer/entity/address";
+import { Product } from '../../src/domain/product/domain/product';
 import { OrderItem } from "../../src/domain/entity/order_item";
 import { OrderService } from "../../src/domain/service/order.service";
 
