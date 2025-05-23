@@ -1,11 +1,11 @@
-import { Customer } from '../../../../src/domain/entity/customer';
-import { Address } from '../../../../src/domain/entity/address';
-import EventDispatcher from '../../../../src/domain/event/@shared/event-dispatcher';
-import CustomerCreatedEvent from '../../../../src/domain/event/customer/customer-created.event';
-import SendEmailWhenCustomerIsCreated from '../../../../src/domain/event/customer/handler/send-email-when-customer-is-created.handler';
-import NotifyAppWhenCustomerIsCreated from '../../../../src/domain/event/customer/handler/notify-app-when-customer-is-created.handler';
-import SendEmailWhenCustomerAddressIsChanged from '../../../../src/domain/event/customer/handler/send-email-when-customer-address-is-changed.handler';
-import AddressChangedEvent from '../../../../src/domain/event/customer/customer-address-changed.event';
+import { Customer } from '../../../../src/domain/customer/entity/customer';
+import { Address } from '../../../../src/domain/customer/value-object/address';
+import EventDispatcher from '../../../../src/domain/@shared/event/event-dispatcher';
+import CustomerCreatedEvent from '../../../../src/domain/customer/event/customer-created.event';
+import SendEmailWhenCustomerIsCreated from '../../../../src/domain/customer/event/handler/send-email-when-customer-is-created.handler';
+import NotifyAppWhenCustomerIsCreated from '../../../../src/domain/customer/event/handler/notify-app-when-customer-is-created.handler';
+import SendEmailWhenCustomerAddressIsChanged from '../../../../src/domain/customer/event/handler/send-email-when-customer-address-is-changed.handler';
+import AddressChangedEvent from '../../../../src/domain/customer/event/customer-address-changed.event';
 
 describe('Customer created events Tests', () => {
   it('should notify handlers when customer is created', () => {

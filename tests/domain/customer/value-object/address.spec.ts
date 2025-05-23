@@ -1,4 +1,4 @@
-import { Address } from '../../../src/domain/entity/address';
+import { Address } from '../../../../src/domain/customer/value-object/address';
 
 describe('AddressUnitTests', () => {
   

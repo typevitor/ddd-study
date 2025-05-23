@@ -1,5 +1,5 @@
 
-import { Product } from '../../../src/domain/entity/product';
+import { Product } from '../../../../src/domain/product/domain/product';
 
 describe('ProductrUnitTest', () => {
 
