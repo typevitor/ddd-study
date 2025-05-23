@@ -1,5 +1,5 @@
 import { Address } from "../value-object/address";
-import EventInterface from "../../@shared/event.interface";
+import EventInterface from "../../@shared/event/event.interface";
 
 export default class CustomerAddressChangedEvent implements EventInterface {
   dataTimeOccurred: Date;
