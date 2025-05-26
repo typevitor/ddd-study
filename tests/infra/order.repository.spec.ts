@@ -11,7 +11,7 @@ import OrderRepository from "../../src/infra/checkout/repository/sequelize/order
 
 import { Customer } from "../../src/domain/customer/entity/customer";
 import { Address } from "../../src/domain/customer/value-object/address";
-import { Product } from '../../src/domain/product/domain/product';
+import { Product } from '../../src/domain/product/entity/product';
 import { OrderItem } from "../../src/domain/checkout/entity/order_item";
 import { OrderService } from "../../src/domain/checkout/service/order.service";
 
