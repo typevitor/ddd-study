@@ -7,28 +7,24 @@ export default class CustomerFactory {
   static create(customerData: {
     name: string;
     email: string;
-    phone: string;
-    address?: {
-      street: string;
-      city: string;
-      state: string;
-      zip: string;
-    };
+    phone: string
   }): CustomerInterface {
     const { name, email, phone } = customerData;
-
-    
     const customer = new Customer(uuid(), name, email, phone);
-
-    if (customerData.address) {
-      customer.changeAddress(new Address(
-        customerData.address.street,
-        customerData.address.city,
-        customerData.address.state,
-        customerData.address.zip
-      ));
-    }
-
     return customer;
   }
+
+  static createWithAddress(
+    customerData: {
+      name: string;
+      email: string;
+      phone: string
+    } ,
+    address: Address
+  ): CustomerInterface {
+    const customer = new Customer(uuid(), customerData.name, customerData.email, customerData.phone);
+    customer.changeAddress(address);
+    return customer;
+  }
+
 }

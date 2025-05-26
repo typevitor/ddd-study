@@ -1,4 +1,5 @@
 import CustomerFactory from '../../../../src/domain/customer/factory/customer.factory';
+import { Address } from '../../../../src/domain/customer/value-object/address';
 
 describe('CustomerFactoryUnitTest', () => {
 
@@ -21,15 +22,14 @@ describe('CustomerFactoryUnitTest', () => {
       name: 'John Doe',
       email: 'johndoe@email.com',
       phone: '123-456-7890',
-      address: {
-        street: '123 Main St',
-        city: 'Anytown',
-        state: 'CA',
-        zip: '12345',
-      }
     };
-
-    const customer = CustomerFactory.create(customerData);
+    const address = new Address(
+      '123 Main St',
+      'Anytown',
+      'CA',
+      '12345'
+    );
+    const customer = CustomerFactory.createWithAddress(customerData, address);
     expect(customer.getName()).toBe(customerData.name);
     expect(customer.getEmail()).toBe(customerData.email);
     expect(customer.getAddress()).toBeDefined();
