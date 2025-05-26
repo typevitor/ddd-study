@@ -1,6 +1,7 @@
 import { Address } from "../value-object/address";
+import CustomerInterface from "./customer.interface";
 
-export class Customer {
+export class Customer implements CustomerInterface {
 
   private active: boolean = false;
   private address: Address | null = null;
