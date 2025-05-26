@@ -1,6 +1,6 @@
 import ProductInterface from "./product.interface";
 
-export class Product implements ProductInterface {
+export class ProductB implements ProductInterface {
 
   constructor(
     private readonly id: string,
@@ -17,7 +17,7 @@ export class Product implements ProductInterface {
     return this.name;
   }
   getPrice(): number {
-    return this.price;
+    return this.price * 2;
   }
 
   private validate() {
