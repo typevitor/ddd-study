@@ -31,4 +31,16 @@ describe('ProductFactoryUnitTest', () => {
     expect(product.getPrice()).toBe(400); // Price is doubled in ProductB
     expect(product.constructor.name).toBe('ProductB');
   });
+
+  it('should throw and error when creating a product with an unsupported type', () => {
+    const productData = {
+      type: 'C',
+      name: 'Product 3',
+      price: 300,
+    };
+    expect(() => {
+      ProductFactory.create(productData.type, productData.name, productData.price);
+    }
+    ).toThrow('Product type C is not supported');
+  });
 });
